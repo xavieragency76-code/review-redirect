@@ -3,98 +3,243 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>कैफे क्रीम — AI Review</title>
+  <title>The Roast & Brew Cafe - Customer Review</title>
   <style>
-    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, Arial, sans-serif; }
     body {
       margin: 0;
       min-height: 100vh;
-      background: #120e0c;
+      background: linear-gradient(135deg, #3e2723 0%, #6d4c41 50%, #d7ccc8 100%);
+      color: #2c1e16;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 14px;
+    }
+    .card {
+      width: 100%;
+      max-width: 460px;
+      background: #fffdf9;
+      border-radius: 20px;
+      box-shadow: 0 14px 35px rgba(27, 16, 11, 0.35);
+      border: 1px solid #efebe9;
+      padding: 24px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid #efebe9;
+      padding-bottom: 16px;
+    }
+    .badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #5d4037, #8d6e63);
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      font-weight: 700;
+      font-size: 22px;
+      flex-shrink: 0;
     }
-    .card {
-      width: 100%;
-      max-width: 420px;
-      background: #1e1815;
-      border: 1px solid #332822;
-      border-radius: 20px;
-      padding: 24px 20px;
+    .biz-name { font-size: 19px; font-weight: 700; margin: 0; color: #3e2723; }
+    .sub-text { font-size: 13px; color: #795548; margin: 3px 0 0; }
+    .section-title { font-size: 14px; font-weight: 600; margin: 18px 0 8px; color: #4e342e; }
+    .stars { display: flex; gap: 8px; }
+    .star-btn {
+      font-size: 30px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #d7ccc8;
+      padding: 0;
+      line-height: 1;
+      transition: transform 0.1s;
     }
-    h1 { margin: 0 0 6px; font-size: 1.35rem; color: #ffcf87; text-align: center; }
-    p { margin: 0 0 14px; font-size: 0.88rem; color: #c7b9ae; text-align: center; }
+    .star-btn:hover { transform: scale(1.1); }
+    .star-btn.active { color: #f59e0b; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      border: 1px solid #d7ccc8;
+      background: #faf6f2;
+      color: #5d4037;
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chip.selected {
+      background: #5d4037;
+      border-color: #5d4037;
+      color: #ffffff;
+      font-weight: 600;
+    }
     textarea {
       width: 100%;
-      min-height: 115px;
-      border-radius: 12px;
-      border: 1px solid #3d3028;
-      background: #14100d;
-      color: #fff;
-      padding: 12px;
-      font-size: 0.94rem;
-      line-height: 1.45;
-      margin-bottom: 12px;
-    }
-    button, a.btn {
-      display: block;
-      width: 100%;
-      text-align: center;
-      text-decoration: none;
-      border: none;
+      min-height: 110px;
+      border: 1px solid #d7ccc8;
       border-radius: 12px;
       padding: 12px;
-      font-size: 0.94rem;
-      font-weight: 700;
-      cursor: pointer;
+      font-size: 14px;
+      background: #fff;
+      color: #2c1e16;
+      resize: vertical;
       margin-top: 8px;
     }
-    .btn-new { background: #2d231d; color: #ffcf87; border: 1px solid #4e3c31; }
-    .btn-copy { background: #3b82f6; color: #fff; }
-    .btn-go { background: #22c55e; color: #081b0f; }
-    .msg { text-align: center; font-size: 0.82rem; color: #86efac; margin-top: 10px; min-height: 18px; }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    button.primary {
+      flex: 1;
+      background: linear-gradient(135deg, #5d4037, #3e2723);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: #efebe9;
+      color: #3e2723;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .status {
+      font-size: 13px;
+      color: #2e7d32;
+      margin-top: 10px;
+      min-height: 18px;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>कैफे क्रीम</h1>
-    <p>Kuch likhne ki zarurat nahi — AI review ready hai</p>
-    <textarea id="txt" readonly></textarea>
-    <button class="btn-new" id="newBtn" type="button">Generate Another AI Review</button>
-    <button class="btn-copy" id="copyBtn" type="button">Copy Review</button>
-    <a class="btn btn-go" href="https://search.google.com/local/writereview?placeid=ChIJ1RejeACFXjkRqJjpqfFxB40" target="_blank" rel="noopener noreferrer">Open Google Review</a>
-    <div class="msg" id="msg"></div>
+    <div class="header">
+      <div class="badge" id="bizBadge">☕</div>
+      <div>
+        <h1 class="biz-name" id="bizName">The Roast & Brew Cafe</h1>
+        <p class="sub-text">Tap highlights to generate a quick review</p>
+      </div>
+    </div>
+
+    <div class="section-title">Rate your experience</div>
+    <div class="stars" id="starsBox">
+      <button type="button" class="star-btn active" data-val="1">★</button>
+      <button type="button" class="star-btn active" data-val="2">★</button>
+      <button type="button" class="star-btn active" data-val="3">★</button>
+      <button type="button" class="star-btn active" data-val="4">★</button>
+      <button type="button" class="star-btn active" data-val="5">★</button>
+    </div>
+
+    <div class="section-title">What did you love?</div>
+    <div class="chips" id="chipsBox">
+      <button type="button" class="chip selected" data-tag="Great coffee">Great coffee</button>
+      <button type="button" class="chip" data-tag="Cozy ambiance">Cozy ambiance</button>
+      <button type="button" class="chip" data-tag="Delicious food">Delicious food</button>
+      <button type="button" class="chip" data-tag="Friendly staff">Friendly staff</button>
+      <button type="button" class="chip" data-tag="Quick service">Quick service</button>
+    </div>
+
+    <div class="section-title">Generated Review</div>
+    <textarea id="reviewText" placeholder="Your review will appear here..."></textarea>
+
+    <div class="actions">
+      <button type="button" class="secondary" id="regenBtn">New Draft</button>
+      <button type="button" class="primary" id="copyAndGoBtn">Copy & Open Google Review</button>
+    </div>
+    <div class="status" id="statusMsg"></div>
   </div>
 
   <script>
-    const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJ1RejeACFXjkRqJjpqfFxB40";
-    const list = [
-      "Had a great visit to कैफे क्रीम near Vijay Cross Road in Navrangpura. Loved the coffee and cozy vibe—super relaxing spot to hang out and unwind.",
-      "Really enjoyed my time at कैफे क्रीम! Friendly staff, nice ambiance, and a great place around University Road to catch up with friends.",
-      "Stopped by कैफे क्रीम in Navrangpura and had a wonderful experience. Fresh drinks, comfortable seating, and a welcoming atmosphere.",
-      "Solid cafe near Vijay Cross Road! कैफे क्रीम offers a calm vibe, tasty beverages, and quick service."
+    const CONFIG = {
+      businessName: "The Roast & Brew Cafe",
+      googleReviewUrl: "https://maps.app.goo.gl/JRG7tbsFtVppQxbq5?g_st=ac"
+    };
+
+    let rating = 5;
+    const selectedTags = new Set(["Great coffee"]);
+
+    const templates = [
+      (biz, tags, stars) => `Had a wonderful ${stars}-star visit to ${biz}! Loved the ${tags}—definitely coming back soon.`,
+      (biz, tags) => `Amazing time at ${biz}. The ${tags} made the whole experience special. Highly recommended cafe!`,
+      (biz, tags) => `One of my favorite spots! Visited ${biz} and really enjoyed the ${tags}. Great vibe all around.`
     ];
+    let draftIndex = 0;
 
-    let i = 0;
-    const txt = document.getElementById("txt");
-    const msg = document.getElementById("msg");
-
-    function nextReview() {
-      txt.value = list[i % list.length];
-      i++;
-      msg.textContent = "";
+    function formatTags(list) {
+      if (list.length === 0) return "overall vibe";
+      if (list.length === 1) return list[0].toLowerCase();
+      const last = list[list.length - 1].toLowerCase();
+      return list.slice(0, -1).map(x => x.toLowerCase()).join(", ") + " and " + last;
     }
 
-    document.getElementById("newBtn").addEventListener("click", nextReview);
+    function generateDraft() {
+      const tagsText = formatTags(Array.from(selectedTags));
+      const fn = templates[draftIndex % templates.length];
+      document.getElementById("reviewText").value = fn(CONFIG.businessName, tagsText, rating);
+    }
 
-    document.getElementById("copyBtn").addEventListener("click", async () => {
-      await navigator.clipboard.writeText(txt.value);
-      msg.textContent = "Copied to clipboard!";
+    document.getElementById("bizName").textContent = CONFIG.businessName;
+
+    document.querySelectorAll(".star-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        rating = Number(btn.dataset.val);
+        document.querySelectorAll(".star-btn").forEach(b => {
+          b.classList.toggle("active", Number(b.dataset.val) <= rating);
+        });
+        generateDraft();
+      });
     });
 
-    nextReview();
+    document.querySelectorAll(".chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        const tag = chip.dataset.tag;
+        if (selectedTags.has(tag)) {
+          selectedTags.delete(tag);
+          chip.classList.remove("selected");
+        } else {
+          selectedTags.add(tag);
+          chip.classList.add("selected");
+        }
+        generateDraft();
+      });
+    });
+
+    document.getElementById("regenBtn").addEventListener("click", () => {
+      draftIndex++;
+      generateDraft();
+      document.getElementById("statusMsg").textContent = "Generated a fresh draft.";
+    });
+
+    document.getElementById("copyAndGoBtn").addEventListener("click", async () => {
+      const text = document.getElementById("reviewText").value.trim();
+      const statusEl = document.getElementById("statusMsg");
+      try {
+        await navigator.clipboard.writeText(text);
+        statusEl.textContent = "Copied! Opening Google Review...";
+      } catch (e) {
+        statusEl.textContent = "Select & copy the text above, then paste on Google.";
+      }
+      setTimeout(() => {
+        window.open(CONFIG.googleReviewUrl, "_blank", "noopener,noreferrer");
+      }, 500);
+    });
+
+    generateDraft();
   </script>
 </body>
 </html>
