@@ -3,13 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="refresh" content="0; url=https://maps.app.goo.gl/GxKQPfRhD1bezL5S6?g_st=ac" />
-  <title>Redirecting...</title>
-  <script>
-    window.location.replace("https://maps.app.goo.gl/GxKQPfRhD1bezL5S6?g_st=ac");
-  </script>
+  <title>कैफे क्रीम — Google Review</title>
+  <style>
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #120e0c;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+    }
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #1e1815;
+      border: 1px solid #332822;
+      border-radius: 20px;
+      padding: 24px 20px;
+    }
+    h1 { margin: 0 0 8px; font-size: 1.4rem; color: #ffcf87; }
+    p { margin: 0 0 14px; font-size: 0.9rem; color: #d6c8be; line-height: 1.45; }
+    .box {
+      background: #14100d;
+      border: 1px solid #3c2f27;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.92rem;
+      line-height: 1.45;
+      color: #fff;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      text-decoration: none;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .btn-go { background: #22c55e; color: #081b0f; }
+    .btn-alt { background: #2d231d; color: #ffcf87; border: 1px solid #4e3c31; }
+    .msg { font-size: 0.8rem; color: #86efac; margin-top: 10px; min-height: 18px; }
+  </style>
 </head>
 <body>
-  <p>Redirecting... <a href="https://maps.app.goo.gl/GxKQPfRhD1bezL5S6?g_st=ac">Click here</a></p>
+  <div class="card">
+    <h1>कैफे क्रीम</h1>
+    <p>Aapka AI review ready hai. Paste karke Google Review post karein:</p>
+    <div class="box" id="autoReview"></div>
+    <a class="btn btn-go" id="goGoogle" href="https://search.google.com/local/writereview?placeid=ChIJ1RejeACFXjkRqJjpqfFxB40" target="_blank" rel="noopener noreferrer">
+      Continue to Google Review
+    </a>
+    <a class="btn btn-alt" href="./review.html">Change / Regenerate Review</a>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <script>
+    const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJ1RejeACFXjkRqJjpqfFxB40";
+
+    const aiReviews = [
+      "Had a great visit to कैफे क्रीम near Vijay Cross Road in Navrangpura. Loved the coffee and cozy vibe—super relaxing spot to hang out and unwind.",
+      "Really enjoyed my time at कैफे क्रीम! Friendly staff, nice ambiance, and a great place around University Road to catch up with friends.",
+      "Stopped by कैफे क्रीम in Navrangpura and had a wonderful experience. Fresh drinks, comfortable seating, and a welcoming atmosphere."
+    ];
+
+    const chosen = aiReviews[Math.floor(Math.random() * aiReviews.length)];
+    document.getElementById("autoReview").textContent = chosen;
+
+    async function runFlow() {
+      const msg = document.getElementById("msg");
+      try {
+        await navigator.clipboard.writeText(chosen);
+        msg.textContent = "Review auto-copied! Opening Google Review...";
+      } catch (e) {
+        msg.textContent = "Tap Copy or select text above, then open Google Review.";
+      }
+
+      setTimeout(() => {
+        window.location.href = GOOGLE_REVIEW_URL;
+      }, 900);
+    }
+
+    runFlow();
+  </script>
 </body>
 </html>
