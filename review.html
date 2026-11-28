@@ -3,257 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Customer Review</title>
+  <title>कैफे क्रीम — AI Review</title>
   <style>
-    * { box-sizing: border-box; font-family: system-ui, -apple-system, Arial, sans-serif; }
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
     body {
       margin: 0;
-      background: #f1f5f9;
-      color: #0f172a;
+      min-height: 100vh;
+      background: #120e0c;
+      color: #fff;
       display: flex;
+      align-items: center;
       justify-content: center;
-      padding: 20px 14px;
+      padding: 16px;
     }
     .card {
       width: 100%;
-      max-width: 460px;
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-      padding: 22px;
-      border: 1px solid #e2e8f0;
+      max-width: 420px;
+      background: #1e1815;
+      border: 1px solid #332822;
+      border-radius: 20px;
+      padding: 24px 20px;
     }
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 14px;
-    }
-    .badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #1a73e8;
+    h1 { margin: 0 0 6px; font-size: 1.35rem; color: #ffcf87; text-align: center; }
+    p { margin: 0 0 14px; font-size: 0.88rem; color: #c7b9ae; text-align: center; }
+    textarea {
+      width: 100%;
+      min-height: 115px;
+      border-radius: 12px;
+      border: 1px solid #3d3028;
+      background: #14100d;
       color: #fff;
-      font-weight: 700;
-      font-size: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      padding: 12px;
+      font-size: 0.94rem;
+      line-height: 1.45;
+      margin-bottom: 12px;
     }
-    .biz-name { font-size: 18px; font-weight: 700; margin: 0; }
-    .sub-text { font-size: 13px; color: #475569; margin: 2px 0 0; }
-
-    .section-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin: 16px 0 8px;
-      color: #1e293b;
-    }
-    .stars {
-      display: flex;
-      gap: 8px;
-      font-size: 32px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .star { color: #cbd5e1; transition: transform 0.12s; }
-    .star.active { color: #f59e0b; }
-    .star:hover { transform: scale(1.08); }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .chip {
-      border: 1px solid #cbd5e1;
-      background: #f8fafc;
-      color: #334155;
-      padding: 7px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      cursor: pointer;
-    }
-    .chip.selected {
-      background: #e8f0fe;
-      border-color: #1a73e8;
-      color: #1a73e8;
-      font-weight: 600;
-    }
-
-    input, textarea {
+    button, a.btn {
+      display: block;
       width: 100%;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      padding: 10px 12px;
-      font-size: 14px;
-      color: #0f172a;
-      background: #fff;
-    }
-    textarea { min-height: 105px; resize: vertical; line-height: 1.45; }
-
-    .row-btns {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    button {
-      border: none;
-      border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-ai {
-      background: #e2e8f0;
-      color: #0f172a;
-      flex: 1;
-    }
-    .btn-primary {
-      background: #1a73e8;
-      color: #ffffff;
-      width: 100%;
-      margin-top: 14px;
-      font-size: 15px;
-    }
-    .status {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #15803d;
-      min-height: 18px;
       text-align: center;
-      font-weight: 500;
+      text-decoration: none;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.94rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
     }
+    .btn-new { background: #2d231d; color: #ffcf87; border: 1px solid #4e3c31; }
+    .btn-copy { background: #3b82f6; color: #fff; }
+    .btn-go { background: #22c55e; color: #081b0f; }
+    .msg { text-align: center; font-size: 0.82rem; color: #86efac; margin-top: 10px; min-height: 18px; }
   </style>
 </head>
 <body>
   <div class="card">
-    <div class="header">
-      <div class="badge" id="bizInitial">S</div>
-      <div>
-        <h1 class="biz-name" id="bizTitle">Sharma Store</h1>
-        <p class="sub-text">Google Customer Reviews • Tap to rate &amp; generate</p>
-      </div>
-    </div>
-
-    <div class="section-title">1. Tap your star rating</div>
-    <div class="stars" id="starsBox">
-      <span class="star active" data-val="1">★</span>
-      <span class="star active" data-val="2">★</span>
-      <span class="star active" data-val="3">★</span>
-      <span class="star active" data-val="4">★</span>
-      <span class="star active" data-val="5">★</span>
-    </div>
-
-    <div class="section-title">2. What stood out? (Optional)</div>
-    <div class="chips" id="chipsBox">
-      <span class="chip selected" data-tag="great service">Great Service</span>
-      <span class="chip selected" data-tag="polite and helpful staff">Friendly Staff</span>
-      <span class="chip" data-tag="quick response">Fast &amp; Smooth</span>
-      <span class="chip" data-tag="good value for money">Good Value</span>
-      <span class="chip" data-tag="clean and welcoming place">Clean &amp; Welcoming</span>
-    </div>
-
-    <div class="section-title">3. Any specific detail? (Optional)</div>
-    <input type="text" id="extraNote" placeholder="e.g., helped on time, clear explanation..." />
-
-    <div class="section-title">4. AI-Assisted Review Draft</div>
-    <textarea id="reviewBox"></textarea>
-
-    <div class="row-btns">
-      <button type="button" class="btn-ai" id="regenBtn">✨ Regenerate Draft</button>
-    </div>
-
-    <button type="button" class="btn-primary" id="postBtn">Copy Review &amp; Open Google</button>
-    <div class="status" id="statusMsg"></div>
+    <h1>कैफे क्रीम</h1>
+    <p>Kuch likhne ki zarurat nahi — AI review ready hai</p>
+    <textarea id="txt" readonly></textarea>
+    <button class="btn-new" id="newBtn" type="button">Generate Another AI Review</button>
+    <button class="btn-copy" id="copyBtn" type="button">Copy Review</button>
+    <a class="btn btn-go" href="https://search.google.com/local/writereview?placeid=ChIJ1RejeACFXjkRqJjpqfFxB40" target="_blank" rel="noopener noreferrer">Open Google Review</a>
+    <div class="msg" id="msg"></div>
   </div>
 
   <script>
-    // === YAHAN APNI DUKAN KI DETAILS BADLO ===
-    const CONFIG = {
-      businessName: "Sharma Store",
-      googleReviewUrl: "https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID"
-    };
+    const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJ1RejeACFXjkRqJjpqfFxB40";
+    const list = [
+      "Had a great visit to कैफे क्रीम near Vijay Cross Road in Navrangpura. Loved the coffee and cozy vibe—super relaxing spot to hang out and unwind.",
+      "Really enjoyed my time at कैफे क्रीम! Friendly staff, nice ambiance, and a great place around University Road to catch up with friends.",
+      "Stopped by कैफे क्रीम in Navrangpura and had a wonderful experience. Fresh drinks, comfortable seating, and a welcoming atmosphere.",
+      "Solid cafe near Vijay Cross Road! कैफे क्रीम offers a calm vibe, tasty beverages, and quick service."
+    ];
 
-    let selectedRating = 5;
-    const reviewBox = document.getElementById("reviewBox");
-    const extraNote = document.getElementById("extraNote");
-    const statusMsg = document.getElementById("statusMsg");
+    let i = 0;
+    const txt = document.getElementById("txt");
+    const msg = document.getElementById("msg");
 
-    document.getElementById("bizTitle").textContent = CONFIG.businessName;
-    document.getElementById("bizInitial").textContent = CONFIG.businessName.charAt(0).toUpperCase() || "G";
-    document.title = CONFIG.businessName + " - Reviews";
-
-    function getSelectedTags() {
-      return Array.from(document.querySelectorAll(".chip.selected")).map(el => el.dataset.tag);
+    function nextReview() {
+      txt.value = list[i % list.length];
+      i++;
+      msg.textContent = "";
     }
 
-    function generateDraft() {
-      const tags = getSelectedTags();
-      const note = extraNote.value.trim();
-      const highlights = tags.length ? tags.join(", ") : "overall experience";
-      const extraPart = note ? ` Also appreciated ${note}.` : "";
+    document.getElementById("newBtn").addEventListener("click", nextReview);
 
-      const fiveStarVariants = [
-        `Had a wonderful experience at ${CONFIG.businessName}. Really liked the ${highlights}.${extraPart} Would definitely recommend to others!`,
-        `Very happy with ${CONFIG.businessName}! Everything went smoothly, especially the ${highlights}.${extraPart} Worth visiting again.`,
-        `Five-star experience at ${CONFIG.businessName}. Truly impressed by the ${highlights}.${extraPart} Keep up the great work!`
-      ];
-
-      const midStarVariants = [
-        `Visited ${CONFIG.businessName} and had a decent experience with ${highlights}.${extraPart} Room for a bit more polish, overall okay.`,
-        `My experience at ${CONFIG.businessName} was fair regarding ${highlights}.${extraPart} Hope things improve even further.`
-      ];
-
-      const lowStarVariants = [
-        `Had some issues during my visit to ${CONFIG.businessName} around ${highlights}.${extraPart} Hoping the team looks into this.`
-      ];
-
-      const pool = selectedRating >= 4 ? fiveStarVariants : (selectedRating === 3 ? midStarVariants : lowStarVariants);
-      const randomIndex = Math.floor(Math.random() * pool.length);
-      reviewBox.value = pool[randomIndex];
-    }
-
-    document.querySelectorAll(".star").forEach(star => {
-      star.addEventListener("click", () => {
-        selectedRating = Number(star.dataset.val);
-        document.querySelectorAll(".star").forEach(s => {
-          s.classList.toggle("active", Number(s.dataset.val) <= selectedRating);
-        });
-        generateDraft();
-      });
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+      await navigator.clipboard.writeText(txt.value);
+      msg.textContent = "Copied to clipboard!";
     });
 
-    document.querySelectorAll(".chip").forEach(chip => {
-      chip.addEventListener("click", () => {
-        chip.classList.toggle("selected");
-        generateDraft();
-      });
-    });
-
-    extraNote.addEventListener("input", generateDraft);
-    document.getElementById("regenBtn").addEventListener("click", generateDraft);
-
-    document.getElementById("postBtn").addEventListener("click", async () => {
-      const textToCopy = reviewBox.value.trim();
-      try {
-        await navigator.clipboard.writeText(textToCopy);
-        statusMsg.textContent = "Review copied! Opening Google...";
-      } catch (err) {
-        reviewBox.select();
-        document.execCommand("copy");
-        statusMsg.textContent = "Review selected/copied! Opening Google...";
-      }
-      setTimeout(() => {
-        window.location.href = CONFIG.googleReviewUrl;
-      }, 600);
-    });
-
-    generateDraft();
+    nextReview();
   </script>
 </body>
 </html>
